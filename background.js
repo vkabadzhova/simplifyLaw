@@ -10,6 +10,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         frequency_penalty: 0.0,
         presence_penalty: 0.0,
       };
+      
   
       fetch('https://api.openai.com/v1/completions', {
         method: 'POST',
@@ -33,7 +34,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       })
       .catch(error => {
         console.error('Error:', error);
-        sendResponse({ error: "An error occurred while simplifying the text." });
+        sendResponse({ error: "An error occurred while calling the OpenAI API." });
       });
   
       return true; // Indicates that the response is asynchronous

@@ -16,6 +16,11 @@
             color: #333;
             margin-bottom: 20px;
         }
+        .header1 {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 20px;
+        }
         .overview-container {
             background-color: #fff;
             border-radius: 8px;
@@ -31,8 +36,13 @@
 </head>
 <body>
     <div class="header">Need a Hint?</div>
+    <div class="header1">An overview of the website is displayed here... ;)</div>
+
     <div class="overview-container">
         <p class="overview">Overview result from OpenAI will be displayed here...</p>
+        <div id="openaiResult">Loading...</div>
+        <!-- Include your popup.js script -->
+        <script src="popup.js"></script>
     </div>
 </body>
 </html>
