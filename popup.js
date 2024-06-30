@@ -11,51 +11,58 @@
 //     });
 // });
 
-document.getElementById('explainButton').addEventListener('click', function() {
-    const selectedText = window.getSelection().toString();
-    if (selectedText) {
-        sendQueryToOpenAI(selectedText);
-    } else {
-        alert('Please select some text to explain.');
-    }
-});
+// ----------------- Below is when it was working -----------------
+// - backend errors:
+// --> Error handling response: ReferenceError: document is not defined at chrome-extension://dfjcffodpajiagmkcglkheelcejlhojf/background.js:71:29
+// --> Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist.
+// - yet overall looks good 
 
-function sendQueryToOpenAI(selectedText) {
-    const openAIKey = 'sk-proj-K1PFkbkvxtmvGiEmQOg5T3BlbkFJml5kjk20CfcDa2mhMo7f'; // This should be securely stored
-      const data = {
-        messages: [
-          { role: "user", content: `Explain in simple words: ${selectedText}` }
-        ],
-        max_tokens: 60,
-        model: "gpt-4",
-      };
+// --> There is no 'explainButton' in the popup.html file. Maybe this is why the first error is thrown.
+// document.getElementById('explainButton').addEventListener('click', function() {
+//     const selectedText = window.getSelection().toString();
+//     if (selectedText) {
+//         sendQueryToOpenAI(selectedText);
+//     } else {
+//         alert('Please select some text to explain.');
+//     }
+// });
+
+// function sendQueryToOpenAI(selectedText) {
+    // const openAIKey = 'sk-proj-K1PFkbkvxtmvGiEmQOg5T3BlbkFJml5kjk20CfcDa2mhMo7f'; // This should be securely stored
+    //   const data = {
+    //     messages: [
+    //       { role: "user", content: `Explain in simple words: ${selectedText}` }
+    //     ],
+    //     max_tokens: 60,
+    //     model: "gpt-4",
+    //   };
       
-      fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${openAIKey}`
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('ReadmeLaw error: Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (data.choices && data.choices.length > 0 && data.choices[0].message.content.trim()) {
-          const simplifiedText = data.choices[0].message.content.trim();
-          sendResponse({ simplifiedText });
-        } else {
-          throw new Error('ReadmeLaw error: No choices found in the response');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        sendResponse({ error: "ReadmeLaw error: An error occurred while calling the OpenAI API: " + error.message });
-      });
-      return true; // keeps the sendResponse callback valid after the listener returns
-    }
-}
+    //   fetch('https://api.openai.com/v1/chat/completions', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Authorization': `Bearer ${openAIKey}`
+    //     },
+    //     body: JSON.stringify(data)
+    //   })
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error('ReadmeLaw error: Network response was not ok');
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     if (data.choices && data.choices.length > 0 && data.choices[0].message.content.trim()) {
+    //       const simplifiedText = data.choices[0].message.content.trim();
+    //       sendResponse({ simplifiedText });
+    //     } else {
+    //       throw new Error('ReadmeLaw error: No choices found in the response');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //     sendResponse({ error: "ReadmeLaw error: An error occurred while calling the OpenAI API: " + error.message });
+    //   });
+    //   return true; // keeps the sendResponse callback valid after the listener returns
+    // }
+// }
