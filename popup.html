@@ -37,12 +37,28 @@
             font-size: 16px;
             color: #555;
         }
+
+        .beautiful-button {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #5E4B8B; /* Deep purple */
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .beautiful-button:hover {
+            background-color: #483D67; /* A slightly darker shade of purple for hover effect */
+        }
     </style>
 </head>
 <body>
     <div class="header">Need a Hint?</div>
     <div class="header1">An overview of the selected text on the website is displayed here... ;)</div>
-
+    <button class="beautiful-button">Simplify the whole webpage</button>
     <div class="overview-container">
         <!-- <p class="overview">Overview result from OpenAI will be displayed here...</p> -->
         <div id="openaiResult">Loading... Results will be displayed here</div>
