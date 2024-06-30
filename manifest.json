@@ -1,10 +1,12 @@
 {
-  "manifest_version": 3,
   "name": "ReadmeLaw",
+  "description": "ReadmeLaw is a browser extension that helps you understand the law by providing you with explanations of legal terms and phrases.",
   "version": "1.0",
-  "permissions": ["activeTab", "tabs"],
+  "manifest_version": 3,
+  "permissions": ["activeTab", "tabs", "contextMenus", "storage"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
@@ -14,10 +16,10 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_icon": {
+    "icons": {
       "16": "images/icon16.png",
       "48": "images/icon48.png",
       "128": "images/icon128.png"
     }
   }
-}
+} 
