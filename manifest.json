@@ -1,5 +1,5 @@
 {
-  "name": "ReadmeLaw",
+  "name": "ReadmeLaw - after Bozho 1",
   "description": "ReadmeLaw is a browser extension that helps you understand the law by providing you with explanations of legal terms and phrases.",
   "version": "1.0",
   "manifest_version": 3,
@@ -8,12 +8,6 @@
     "service_worker": "background.js",
     "type": "module"
   },
-  "content_scripts": [
-    {
-      "matches": ["*://*.lex.bg/*", "*://*/*", "*://*.lex.bg/*"],
-      "js": ["contentScript.js"]
-    }
-  ],
   "action": {
     "default_popup": "popup.html",
     "icons": {
