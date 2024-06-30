@@ -78,3 +78,29 @@ if (request.action === "updateOpenAIResult") {
     }
 }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  chrome.storage.local.get(['selectionText'], function(result) {
+      // if (result.key) {
+      //     document.getElementById('openaiResult').textContent = result.key;
+      // } else {
+      //     document.getElementById('content').textContent = 'No data found';
+      // }
+      
+      // const resultElement = document.getElementById('openaiResult');
+      // if (request.error) {
+      //     resultElement.textContent = 'Error: ' + request.error;
+      // } else {
+      //     resultElement.textContent = request.simplifiedText;
+      // }
+
+    chrome.runtime.sendMessage({action: "simplifyText", text: result.selectionText}, function(response) {
+      const resultElement = document.getElementById('openaiResult'); // Assuming the class overview is used for results
+      if (response.error) {
+          resultElement.textContent = 'Error: ' + response.error;
+      } else {
+        resultElement.textContent = response.simplifiedText;
+      }
+    });
+  });
+});
