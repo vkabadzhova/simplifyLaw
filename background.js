@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const openAIKey = 'sk-proj-K1PFkbkvxtmvGiEmQOg5T3BlbkFJml5kjk20CfcDa2mhMo7f'; // This should be securely stored
       const data = {
         messages: [
-          { role: "user", content: `Explain in simple words: ${request.text}` }
+          { role: "user", content: `Explain in a simple way: ${request.text}` }
         ],
         max_tokens: 60,
         model: "gpt-4",
