@@ -1,2 +1,2 @@
-# readme-law-simplifier
+# SimplifyLaw
 A law simplifying tool:)

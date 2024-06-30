@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       })
       .then(response => {
         if (!response.ok) {
-          throw new Error('ReadmeLaw error: Network response was not ok');
+          throw new Error('SimplifyLaw error: Network response was not ok');
         }
         return response.json();
       })
@@ -29,20 +29,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           const simplifiedText = data.choices[0].message.content.trim();
           sendResponse({ simplifiedText });
         } else {
-          throw new Error('ReadmeLaw error: No choices found in the response');
+          throw new Error('SimplifyLaw error: No choices found in the response');
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        sendResponse({ error: "ReadmeLaw error: An error occurred while calling the OpenAI API: " + error.message });
+        sendResponse({ error: "SimplifyLaw error: An error occurred while calling the OpenAI API: " + error.message });
       });
       return true; // keeps the sendResponse callback valid after the listener returns
     }
 });
-
-// Copyright 2017 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
 
 // When you specify "type": "module" in the manifest background,
 // you can include the service worker as an ES Module,
@@ -61,40 +57,11 @@ chrome.runtime.onInstalled.addListener(async () => {
   }
 });
 
-// ~~ Open a new search tab when the user clicks a context menu ~~
-// 1. Run a new query when the user clicks a context menu; 
-// 2. put the text in the popup
 chrome.contextMenus.onClicked.addListener((item, tab) => {
   const tld = item.menuItemId;
-  // const url = new URL(`https://google.${tld}/search`);
-  // url.searchParams.set('q', item.selectionText);
-  // chrome.tabs.create({ url: url.href, index: tab.index + 1 });
   chrome.storage.local.set({selectionText: item.selectionText}, function() {
     console.log('selectionText var is set to ' + value);
   });
-
-  // chrome.runtime.sendMessage({action: "simplifyText", text: item.selectionText}, function(response) {
-  //   const resultElement = document.getElementById('openaiResult'); // Assuming the class overview is used for results
-  //   if (response.error) {
-  //       resultElement.textContent = 'Error: ' + response.error;
-  //   } else {
-  //     chrome.storage.local.set({key: 'value'}, function() {
-  //       console.log('Value is set to ' + value);
-  //     });
-  //       chrome.runtime.sendMessage({action: "updateOpenAIResult", simplifiedText: response.simplifiedText});
-  //   }
-  // });
-
-
-  // chrome.runtime.sendMessage({action: "simplifyText", text: item.selectionText}, function(response) {
-  //   const resultElement = document.getElementById('openaiResult'); // Assuming the class overview is used for results
-  //   if (response.error) {
-  //       resultElement.textContent = 'Error: ' + response.error;
-  //   } else {
-  //       resultElement.textContent = response.simplifiedText;
-  //   }
-  // });
-
 });
 
 // Add or removes the locale from context menu
