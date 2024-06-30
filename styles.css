@@ -1,0 +1,14 @@
+/* CSS code for styling the "Explain" button */
+#explain-btn {
+    background-color: #f0f2f5;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 1000; /* Ensure the button is above other elements */
+    display: inline-block; /* Change from none to inline-block or block, depending on need */
+    position: absolute; /* Ensure positioning is absolute for proper placement */
+}
