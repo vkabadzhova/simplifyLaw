@@ -66,3 +66,15 @@
     //   return true; // keeps the sendResponse callback valid after the listener returns
     // }
 // }
+
+// Listen for messages from the background script
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+if (request.action === "updateOpenAIResult") {
+    const resultElement = document.getElementById('openaiResult');
+    if (request.error) {
+        resultElement.textContent = 'Error: ' + request.error;
+    } else {
+        resultElement.textContent = request.simplifiedText;
+    }
+}
+});
