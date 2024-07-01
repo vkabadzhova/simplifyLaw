@@ -1,4 +1,5 @@
 # SimplifyLaw Browser Extension
+> Note: Copilot wrote me, more emojis will be included in that readme in the future :smiley:
 
 ## Description
 
