@@ -1,4 +1,7 @@
 # SimplifyLaw Browser Extension
+✨ Welcome to SimplifyLaw! ✨
+
+> Note: Keep in mind that this is a very, very, very raw version of the project for now. It is completely possible that some things don't work:) Feel free to dm me in twitter to help you fix some issues:) @KabVioleta44703
 
 ## Description
 
@@ -36,8 +39,8 @@ SimplifyLaw is a browser extension designed to make legal jargon more accessible
 ## How to Use
 - Select a text from any browser;
 - Click on the right button, then "Explain with SimplifyLaw"
-- go the the extensions SimplifyLaw popup (an "S" icon)
-- checkout the result!
+- Go the the extensions SimplifyLaw popup (an "S" icon); you can pin it for quick access😉
+- Check out the result!
 
 ## Contributing
 
