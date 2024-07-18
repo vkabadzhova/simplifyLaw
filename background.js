@@ -1,12 +1,13 @@
 // background.js
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action == "simplifyText") {
-      const openAIKey = 'sk-proj-K1PFkbkvxtmvGiEmQOg5T3BlbkFJml5kjk20CfcDa2mhMo7f'; // This should be securely stored
+      const openAIKey = ''; // Add the API key here
       const data = {
         messages: [
-          { role: "user", content: `Explain in a simple way: ${request.text}` }
+          // { role: "user", content: `Recognize the language of the original text I put here. Don't answer in English, if the text isn't in English, answer in the same language as the original text. Explain the text in a simple way: ${request.text}` }
+          { role: "user", content: `Explain the text in a simple way: ${request.text}` }
         ],
-        max_tokens: 60,
+        max_tokens: 300,
         model: "gpt-4",
       };
       

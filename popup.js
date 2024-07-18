@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  chrome.storage.local.remove(['selectionText'], function() {
-    console.log('selectionText var is removed');
-  });
+  // chrome.storage.local.remove(['selectionText'], function() {
+  //   console.log('selectionText var is removed');
+  // });
 });
