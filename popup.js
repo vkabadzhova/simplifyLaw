@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const chatContainer = document.getElementById('chatContainer');
   let conversationHistory = [];
 
-  // Add placeholder text
-  chatContainer.innerText = 'Results will be displayed here...';
+  // Add placeholder text only if there is no conversation history
+  if (conversationHistory.length === 0) {
+      chatContainer.innerText = 'Results will be displayed here...';
+  }
 
   // Function to send request to OpenAI
   async function sendRequest(query) {
@@ -102,8 +104,36 @@ document.addEventListener('DOMContentLoaded', function() {
   chrome.storage.local.get('selectedText', (result) => {
     if (result.selectedText) {
       // Remove placeholder text
-      chatContainer.innerText = '';
-      sendRequest(result.selectedText);
+      if (conversationHistory.length === 0) {
+          chatContainer.innerText = '';
+      }
+
+      // Get the selected radio button value
+      const selectedRadio = document.querySelector('input[name="responseStyle"]:checked');
+      let query = result.selectedText;
+      if (selectedRadio) {
+          switch (selectedRadio.value) {
+              case 'Shorter':
+                  query = `Make this shorter: ${result.selectedText}`;
+                  break;
+              case 'Longer':
+                  query = `Make this longer: ${result.selectedText}`;
+                  break;
+              case 'Simpler':
+                  query = `Make this simpler: ${result.selectedText}`;
+                  break;
+              case 'More Casual':
+                  query = `Make this more casual: ${result.selectedText}`;
+                  break;
+              case 'More Professional':
+                  query = `Make this more professional: ${result.selectedText}`;
+                  break;
+              default:
+                  query = `Explain this text in a simple way: ${result.selectedText}`;
+          }
+      }
+
+      sendRequest(query);
       chrome.storage.local.remove('selectedText');
     }
   });
@@ -140,7 +170,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const query = userQuery.value;
       if (query) {
           // Remove placeholder text
-          chatContainer.innerText = '';
+          if (conversationHistory.length === 0) {
+              chatContainer.innerText = '';
+          }
           sendRequest(query);
           userQuery.value = '';
       }
