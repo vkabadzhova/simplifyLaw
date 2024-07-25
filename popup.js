@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const chatContainer = document.getElementById('chatContainer');
   let conversationHistory = [];
 
+  // Add placeholder text
+  chatContainer.innerText = 'Results will be displayed here...';
+
   // Function to send request to OpenAI
   async function sendRequest(query) {
       const openAIKey = ''; // Add the API key here
@@ -98,6 +101,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Check for selected text on popup load
   chrome.storage.local.get('selectedText', (result) => {
     if (result.selectedText) {
+      // Remove placeholder text
+      chatContainer.innerText = '';
       sendRequest(result.selectedText);
       chrome.storage.local.remove('selectedText');
     }
@@ -134,6 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
   submitQuery.addEventListener('click', function() {
       const query = userQuery.value;
       if (query) {
+          // Remove placeholder text
+          chatContainer.innerText = '';
           sendRequest(query);
           userQuery.value = '';
       }
