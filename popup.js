@@ -1,28 +1,71 @@
-// Listen for messages from the background script
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-if (request.action === "updateOpenAIResult") {
-    const resultElement = document.getElementById('openaiResult');
-    if (request.error) {
-        resultElement.textContent = 'Error: ' + request.error;
-    } else {
-        resultElement.textContent = request.simplifiedText;
-    }
-}
-});
-
 document.addEventListener('DOMContentLoaded', function() {
-  chrome.storage.local.get(['selectionText'], function(result) {
-    chrome.runtime.sendMessage({action: "simplifyText", text: result.selectionText}, function(response) {
-      const resultElement = document.getElementById('openaiResult'); // Assuming the class overview is used for results
-      if (response.error) {
-          resultElement.textContent = 'Error: ' + response.error;
-      } else {
-        resultElement.textContent = response.simplifiedText;
-      }
-    });
+  const openaiResult = document.getElementById('openaiResult');
+  const userQuery = document.getElementById('userQuery');
+  const submitQuery = document.getElementById('submitQuery');
+  let lastResponse = '';
+
+  // Function to send request to OpenAI
+  function sendRequest(query) {
+      const openAIKey = ''; // Add the API key here
+      const data = {
+          messages: [{ role: "user", content: query }],
+          max_tokens: 300,
+          model: "gpt-4",
+      };
+
+      fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${openAIKey}`
+          },
+          body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+          const responseText = data.choices[0].message.content;
+          openaiResult.innerText = responseText;
+          lastResponse = responseText;
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          openaiResult.innerText = 'An error occurred. Please try again.';
+      });
+  }
+
+  // Handle radio button change
+  document.querySelectorAll('input[name="responseStyle"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+          let query = '';
+          switch (this.value) {
+              case 'Shorter':
+                  query = `Make this shorter: ${lastResponse}`;
+                  break;
+              case 'Longer':
+                  query = `Make this longer: ${lastResponse}`;
+                  break;
+              case 'Simpler':
+                  query = `Make this simpler: ${lastResponse}`;
+                  break;
+              case 'More Casual':
+                  query = `Make this more casual: ${lastResponse}`;
+                  break;
+              case 'More Professional':
+                  query = `Make this more professional: ${lastResponse}`;
+                  break;
+              default:
+                  query = `Explain the text in a simple way: ${lastResponse}`;
+          }
+          sendRequest(query);
+      });
   });
 
-  // chrome.storage.local.remove(['selectionText'], function() {
-  //   console.log('selectionText var is removed');
-  // });
+  // Handle user query submission
+  submitQuery.addEventListener('click', function() {
+      const query = userQuery.value;
+      if (query) {
+          sendRequest(query);
+          userQuery.value = '';
+      }
+  });
 });

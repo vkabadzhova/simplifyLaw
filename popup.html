@@ -11,10 +11,10 @@
             padding: 20px;
             margin: 0;
             background-color: #f0f2f5;
-            width: 80%; /* Adjust the width to be 80% of the screen size */
-            max-width: 600px; /* Maximum width to ensure the popup doesn't get too wide on large screens */
-            min-width: 300px; /* Minimum width to ensure readability on small screens */
-            margin: auto; /* Center the popup */
+            width: 80%;
+            max-width: 600px;
+            min-width: 300px;
+            margin: auto;
         }
         .header {
             font-size: 24px;
@@ -43,10 +43,9 @@
             font-size: 12px;
             color: #555;
         }
-
         .beautiful-button {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #5E4B8B; /* Deep purple */
+            background-color: #5E4B8B;
             color: white;
             padding: 10px 20px;
             margin: 10px 0;
@@ -55,23 +54,67 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         .beautiful-button:hover {
-            background-color: #483D67; /* A slightly darker shade of purple for hover effect */
+            background-color: #483D67;
+        }
+        .radio-buttons {
+            margin-bottom: 10px;
+        }
+        .radio-buttons label {
+            margin-right: 10px;
+        }
+        .chatbot-container {
+            margin-top: 20px;
+        }
+        .chatbot-input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .chatbot-input:focus {
+            border-color: #5E4B8B;
+            outline: none;
+        }
+        .chatbot-submit {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #5E4B8B;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .chatbot-submit:hover {
+            background-color: #483D67;
         }
     </style>
 </head>
 <body>
     <div class="header">Need a Hint?</div>
-    <div class="header1">An overview of the selected text on the website is displayed here... ;)</div>
-    <div class="overview">Select the text you would like to simplify. Click the right button, then click "Explain with Simplify"</div>
-    <!-- <button class="beautiful-button">Simplify the whole webpage</button> -->
-    <div class="overview-container">
-        <!-- <p class="overview">Select the text you would like to simplify. Click the right button > "Explain with Simplify"</p> -->
-        <div id="openaiResult">Loading... Results will be displayed here</div>
-        <!-- Include your popup.js script -->
-        <script src="popup.js"></script>
+    <div class="header1">Select the text you would like to simplify. Click the right button, then click "Explain with Simplify"</div>
+    <!-- <div class="overview"></div> -->
+    <div class="radio-buttons">
+        <label><input type="radio" name="responseStyle" value="Shorter"> Shorter</label><br>
+        <label><input type="radio" name="responseStyle" value="Longer"> Longer</label><br>
+        <label><input type="radio" name="responseStyle" value="Simpler"> Simpler</label><br>
+        <label><input type="radio" name="responseStyle" value="More Casual"> More Casual</label><br>
+        <label><input type="radio" name="responseStyle" value="More Professional"> More Professional</label><br>
+        <label><input type="radio" name="responseStyle" value="Default" checked> Default</label>
     </div>
-    <!-- <script src="explainButton.js"></script> -->
+    <div class="overview-container">
+        <div id="openaiResult">Loading... Results will be displayed here</div>
+    </div>
+    <div class="chatbot-container">
+        <input type="text" id="userQuery" class="chatbot-input" placeholder="Ask a follow-up question...">
+        <button id="submitQuery" class="chatbot-submit">Submit</button>
+    </div>
+    <script src="popup.js"></script>
 </body>
 </html>
