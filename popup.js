@@ -6,33 +6,69 @@ document.addEventListener('DOMContentLoaded', function() {
   let conversationHistory = [];
 
   // Function to send request to OpenAI
-  function sendRequest(query) {
+  async function sendRequest(query) {
       const openAIKey = ''; // Add the API key here
       const data = {
           messages: conversationHistory.concat([{ role: "user", content: query }]),
           max_tokens: 300,
           model: "gpt-4",
+          stream: true
       };
 
-      fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${openAIKey}`
-          },
-          body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(data => {
-          const responseText = data.choices[0].message.content;
-          conversationHistory.push({ role: "user", content: query });
-          conversationHistory.push({ role: "assistant", content: responseText });
+      // Print user's prompt immediately
+      conversationHistory.push({ role: "user", content: query });
+      displayConversation();
+
+      try {
+          const response = await fetch('https://api.openai.com/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${openAIKey}`
+              },
+              body: JSON.stringify(data)
+          });
+
+          const reader = response.body.getReader();
+          let responseText = '';
+          const decoder = new TextDecoder();
+
+          // Add a placeholder for the assistant's response
+          conversationHistory.push({ role: "assistant", content: '' });
           displayConversation();
-      })
-      .catch(error => {
+
+          while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              const chunk = decoder.decode(value);
+              const lines = chunk.split('\n').filter(line => line.trim() !== '');
+              for (const line of lines) {
+                  const message = line.replace(/^data: /, '');
+                  if (message === '[DONE]') {
+                      break;
+                  }
+                  try {
+                      const parsed = JSON.parse(message);
+                      const content = parsed.choices[0].delta.content;
+                      if (content) {
+                          responseText += content;
+                          // Update the last assistant message
+                          conversationHistory[conversationHistory.length - 1].content = responseText;
+                          displayConversation();
+                      }
+                  } catch (error) {
+                      console.error('Error parsing message:', message, error);
+                  }
+              }
+          }
+
+          // Final update to the assistant's message
+          conversationHistory[conversationHistory.length - 1].content = responseText;
+          displayConversation();
+      } catch (error) {
           console.error('Error:', error);
           openaiResult.innerText = 'An error occurred. Please try again.';
-      });
+      }
   }
 
   // Function to display the conversation
@@ -45,10 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
               labelElement.className = 'user-label';
               labelElement.innerText = 'You';
               messageElement.className = 'user-message';
+              messageElement.style.textAlign = 'right';
           } else {
               labelElement.className = 'assistant-label';
               labelElement.innerText = 'SimplifyLaw Chatbot';
               messageElement.className = 'assistant-message';
+              messageElement.style.textAlign = 'left';
           }
           messageElement.innerText = message.content;
           chatContainer.appendChild(labelElement);
