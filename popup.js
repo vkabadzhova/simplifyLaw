@@ -84,27 +84,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to display the conversation
   function displayConversation() {
-      chatContainer.innerHTML = '';
-      conversationHistory.forEach(message => {
-          const messageElement = document.createElement('div');
-          const labelElement = document.createElement('div');
-          if (message.role === 'user') {
-              labelElement.className = 'user-label';
-              labelElement.innerText = 'You';
-              messageElement.className = 'user-message';
-              messageElement.style.textAlign = 'right';
-          } else {
-              labelElement.className = 'assistant-label';
-              labelElement.innerText = 'SimplifyLaw Chatbot';
-              messageElement.className = 'assistant-message';
-              messageElement.style.textAlign = 'left';
-          }
-          messageElement.innerText = message.content;
-          chatContainer.appendChild(labelElement);
-          chatContainer.appendChild(messageElement);
-      });
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-  }
+    chatContainer.innerHTML = '';
+    conversationHistory.forEach(message => {
+        const messageElement = document.createElement('div');
+        const labelElement = document.createElement('div');
+        if (message.role === 'user') {
+            labelElement.className = 'user-label';
+            labelElement.innerText = 'You';
+            messageElement.className = 'user-message';
+            messageElement.style.textAlign = 'right';
+        } else {
+            labelElement.className = 'assistant-label';
+            labelElement.innerText = 'SimplifyLaw Chatbot';
+            messageElement.className = 'assistant-message';
+            messageElement.style.textAlign = 'left';
+        }
+        messageElement.innerText = message.content;
+        chatContainer.appendChild(labelElement);
+        chatContainer.appendChild(messageElement);
+    });
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
 
   // Function to generate query based on selected radio button value
   function generateQuery(style, text) {
