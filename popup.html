@@ -66,8 +66,13 @@
         .chatbot-container {
             margin-top: 20px;
         }
+        .input-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
         .chatbot-input {
-            width: calc(100% - 22px);
+            width: calc(100% - 40px); /* Adjusted to make space for the stop button */
             padding: 10px;
             margin-top: 10px;
             border-radius: 5px;
@@ -76,7 +81,6 @@
             font-size: 14px;
             transition: border-color 0.3s ease;
         }
-
         .chatbot-input:focus {
             border-color: #5E4B8B;
             outline: none;
@@ -120,12 +124,35 @@
             background-color: #e2e3e5;
             align-self: flex-end;
         }
+        .stop-button {
+            background: url('./images/stop-icon.png') no-repeat center center;
+            background-size: contain;
+            width: 22px; /* Adjusted size */
+            height: 22px; /* Adjusted size */
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-30%);
+        }
+        .stop-button:hover::after {
+            content: "Stop responding";
+            position: absolute;
+            top: -25px;
+            right: 0;
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
     <div class="header">Need a Hint?</div>
     <div class="header1">Select the text you would like to simplify. Click the right button, then click "Explain with Simplify"</div>
-    <!-- <div class="overview"></div> -->
     <div class="radio-buttons">
         <label><input type="radio" name="responseStyle" value="Shorter"> Shorter</label><br>
         <label><input type="radio" name="responseStyle" value="Longer"> Longer</label><br>
@@ -134,12 +161,12 @@
         <label><input type="radio" name="responseStyle" value="More Professional"> More Professional</label><br>
         <label><input type="radio" name="responseStyle" value="Default" checked> Default</label>
     </div>
-    <!-- <div class="overview-container">
-        <div id="openaiResult">Loading... Results will be displayed here</div>
-    </div> -->
     <div class="chatbot-container">
         <div id="chatContainer" class="chat-container"></div>
-        <input type="text" id="userQuery" class="chatbot-input" placeholder="Ask a follow-up question...">
+        <div class="input-container">
+            <input type="text" id="userQuery" class="chatbot-input" placeholder="Ask a follow-up question...">
+            <button id="stopResponse" class="stop-button"></button>
+        </div>
         <button id="submitQuery" class="chatbot-submit">Submit</button>
     </div>
     <script src="popup.js"></script>

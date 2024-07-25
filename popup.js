@@ -2,8 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const openaiResult = document.getElementById('openaiResult');
   const userQuery = document.getElementById('userQuery');
   const submitQuery = document.getElementById('submitQuery');
+  const stopResponse = document.getElementById('stopResponse');
   const chatContainer = document.getElementById('chatContainer');
   let conversationHistory = [];
+  let stopFlag = false;
 
   // Add placeholder text only if there is no conversation history
   if (conversationHistory.length === 0) {
@@ -43,6 +45,10 @@ document.addEventListener('DOMContentLoaded', function() {
           displayConversation();
 
           while (true) {
+              if (stopFlag) {
+                  stopFlag = false;
+                  break;
+              }
               const { done, value } = await reader.read();
               if (done) break;
               const chunk = decoder.decode(value);
@@ -102,40 +108,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Check for selected text on popup load
   chrome.storage.local.get('selectedText', (result) => {
-    if (result.selectedText) {
-      // Remove placeholder text
-      if (conversationHistory.length === 0) {
-          chatContainer.innerText = '';
-      }
-
-      // Get the selected radio button value
-      const selectedRadio = document.querySelector('input[name="responseStyle"]:checked');
-      let query = result.selectedText;
-      if (selectedRadio) {
-          switch (selectedRadio.value) {
-              case 'Shorter':
-                  query = `Make this shorter: ${result.selectedText}`;
-                  break;
-              case 'Longer':
-                  query = `Make this longer: ${result.selectedText}`;
-                  break;
-              case 'Simpler':
-                  query = `Make this simpler: ${result.selectedText}`;
-                  break;
-              case 'More Casual':
-                  query = `Make this more casual: ${result.selectedText}`;
-                  break;
-              case 'More Professional':
-                  query = `Make this more professional: ${result.selectedText}`;
-                  break;
-              default:
-                  query = `Explain this text in a simple way: ${result.selectedText}`;
+      if (result.selectedText) {
+          // Remove placeholder text
+          if (conversationHistory.length === 0) {
+              chatContainer.innerText = '';
           }
-      }
 
-      sendRequest(query);
-      chrome.storage.local.remove('selectedText');
-    }
+          // Get the selected radio button value
+          const selectedRadio = document.querySelector('input[name="responseStyle"]:checked');
+          let query = result.selectedText;
+          if (selectedRadio) {
+              switch (selectedRadio.value) {
+                  case 'Shorter':
+                      query = `Make this shorter: ${result.selectedText}`;
+                      break;
+                  case 'Longer':
+                      query = `Make this longer: ${result.selectedText}`;
+                      break;
+                  case 'Simpler':
+                      query = `Make this simpler: ${result.selectedText}`;
+                      break;
+                  case 'More Casual':
+                      query = `Make this more casual: ${result.selectedText}`;
+                      break;
+                  case 'More Professional':
+                      query = `Make this more professional: ${result.selectedText}`;
+                      break;
+                  default:
+                      query = `Explain this text in a simple way: ${result.selectedText}`;
+              }
+          }
+
+          sendRequest(query);
+          chrome.storage.local.remove('selectedText');
+      }
   });
 
   // Handle radio button change
@@ -176,5 +182,10 @@ document.addEventListener('DOMContentLoaded', function() {
           sendRequest(query);
           userQuery.value = '';
       }
+  });
+
+  // Handle stop response button click
+  stopResponse.addEventListener('click', function() {
+      stopFlag = true;
   });
 });
