@@ -103,6 +103,10 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+        .user-label, .assistant-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
         .user-message, .assistant-message {
             padding: 10px;
             margin: 5px 0;
@@ -113,7 +117,7 @@
             align-self: flex-start;
         }
         .assistant-message {
-            background-color: #f8d7da;
+            background-color: #e2e3e5;
             align-self: flex-end;
         }
     </style>
@@ -130,9 +134,9 @@
         <label><input type="radio" name="responseStyle" value="More Professional"> More Professional</label><br>
         <label><input type="radio" name="responseStyle" value="Default" checked> Default</label>
     </div>
-    <div class="overview-container">
+    <!-- <div class="overview-container">
         <div id="openaiResult">Loading... Results will be displayed here</div>
-    </div>
+    </div> -->
     <div class="chatbot-container">
         <div id="chatContainer" class="chat-container"></div>
         <input type="text" id="userQuery" class="chatbot-input" placeholder="Ask a follow-up question...">

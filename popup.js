@@ -40,8 +40,18 @@ document.addEventListener('DOMContentLoaded', function() {
       chatContainer.innerHTML = '';
       conversationHistory.forEach(message => {
           const messageElement = document.createElement('div');
-          messageElement.className = message.role === 'user' ? 'user-message' : 'assistant-message';
+          const labelElement = document.createElement('div');
+          if (message.role === 'user') {
+              labelElement.className = 'user-label';
+              labelElement.innerText = 'You';
+              messageElement.className = 'user-message';
+          } else {
+              labelElement.className = 'assistant-label';
+              labelElement.innerText = 'SimplifyLaw Chatbot';
+              messageElement.className = 'assistant-message';
+          }
           messageElement.innerText = message.content;
+          chatContainer.appendChild(labelElement);
           chatContainer.appendChild(messageElement);
       });
       chatContainer.scrollTop = chatContainer.scrollHeight;
