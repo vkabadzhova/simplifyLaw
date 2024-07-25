@@ -33,6 +33,14 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
+  // Check for selected text on popup load
+  chrome.storage.local.get('selectedText', (result) => {
+    if (result.selectedText) {
+      sendRequest(result.selectedText);
+      chrome.storage.local.remove('selectedText');
+    }
+  });
+
   // Handle radio button change
   document.querySelectorAll('input[name="responseStyle"]').forEach(radio => {
       radio.addEventListener('change', function() {
@@ -54,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   query = `Make this more professional: ${lastResponse}`;
                   break;
               default:
-                  query = `Explain the text in a simple way: ${lastResponse}`;
+                  query = `Explain this text in a simple way: ${lastResponse}`;
           }
           sendRequest(query);
       });
