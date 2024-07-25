@@ -94,6 +94,28 @@
         .chatbot-submit:hover {
             background-color: #483D67;
         }
+        .chat-container {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .user-message, .assistant-message {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #d1e7dd;
+            align-self: flex-start;
+        }
+        .assistant-message {
+            background-color: #f8d7da;
+            align-self: flex-end;
+        }
     </style>
 </head>
 <body>
@@ -112,6 +134,7 @@
         <div id="openaiResult">Loading... Results will be displayed here</div>
     </div>
     <div class="chatbot-container">
+        <div id="chatContainer" class="chat-container"></div>
         <input type="text" id="userQuery" class="chatbot-input" placeholder="Ask a follow-up question...">
         <button id="submitQuery" class="chatbot-submit">Submit</button>
     </div>

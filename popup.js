@@ -2,13 +2,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const openaiResult = document.getElementById('openaiResult');
   const userQuery = document.getElementById('userQuery');
   const submitQuery = document.getElementById('submitQuery');
-  let lastResponse = '';
+  const chatContainer = document.getElementById('chatContainer');
+  let conversationHistory = [];
 
   // Function to send request to OpenAI
   function sendRequest(query) {
       const openAIKey = ''; // Add the API key here
       const data = {
-          messages: [{ role: "user", content: query }],
+          messages: conversationHistory.concat([{ role: "user", content: query }]),
           max_tokens: 300,
           model: "gpt-4",
       };
@@ -24,13 +25,26 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(response => response.json())
       .then(data => {
           const responseText = data.choices[0].message.content;
-          openaiResult.innerText = responseText;
-          lastResponse = responseText;
+          conversationHistory.push({ role: "user", content: query });
+          conversationHistory.push({ role: "assistant", content: responseText });
+          displayConversation();
       })
       .catch(error => {
           console.error('Error:', error);
           openaiResult.innerText = 'An error occurred. Please try again.';
       });
+  }
+
+  // Function to display the conversation
+  function displayConversation() {
+      chatContainer.innerHTML = '';
+      conversationHistory.forEach(message => {
+          const messageElement = document.createElement('div');
+          messageElement.className = message.role === 'user' ? 'user-message' : 'assistant-message';
+          messageElement.innerText = message.content;
+          chatContainer.appendChild(messageElement);
+      });
+      chatContainer.scrollTop = chatContainer.scrollHeight;
   }
 
   // Check for selected text on popup load
@@ -47,22 +61,22 @@ document.addEventListener('DOMContentLoaded', function() {
           let query = '';
           switch (this.value) {
               case 'Shorter':
-                  query = `Make this shorter: ${lastResponse}`;
+                  query = `Make this shorter: ${conversationHistory[conversationHistory.length - 1].content}`;
                   break;
               case 'Longer':
-                  query = `Make this longer: ${lastResponse}`;
+                  query = `Make this longer: ${conversationHistory[conversationHistory.length - 1].content}`;
                   break;
               case 'Simpler':
-                  query = `Make this simpler: ${lastResponse}`;
+                  query = `Make this simpler: ${conversationHistory[conversationHistory.length - 1].content}`;
                   break;
               case 'More Casual':
-                  query = `Make this more casual: ${lastResponse}`;
+                  query = `Make this more casual: ${conversationHistory[conversationHistory.length - 1].content}`;
                   break;
               case 'More Professional':
-                  query = `Make this more professional: ${lastResponse}`;
+                  query = `Make this more professional: ${conversationHistory[conversationHistory.length - 1].content}`;
                   break;
               default:
-                  query = `Explain this text in a simple way: ${lastResponse}`;
+                  query = `Explain this text in a simple way: ${conversationHistory[conversationHistory.length - 1].content}`;
           }
           sendRequest(query);
       });
