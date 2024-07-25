@@ -106,6 +106,24 @@ document.addEventListener('DOMContentLoaded', function() {
       chatContainer.scrollTop = chatContainer.scrollHeight;
   }
 
+  // Function to generate query based on selected radio button value
+  function generateQuery(style, text) {
+      switch (style) {
+          case 'Shorter':
+              return `Make this shorter: ${text}`;
+          case 'Longer':
+              return `Make this longer: ${text}`;
+          case 'Simpler':
+              return `Make this simpler: ${text}`;
+          case 'More Casual':
+              return `Make this more casual: ${text}`;
+          case 'More Professional':
+              return `Make this more professional: ${text}`;
+          default:
+              return `Explain this text in a simple way: ${text}`;
+      }
+  }
+
   // Check for selected text on popup load
   chrome.storage.local.get('selectedText', (result) => {
       if (result.selectedText) {
@@ -118,25 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const selectedRadio = document.querySelector('input[name="responseStyle"]:checked');
           let query = result.selectedText;
           if (selectedRadio) {
-              switch (selectedRadio.value) {
-                  case 'Shorter':
-                      query = `Make this shorter: ${result.selectedText}`;
-                      break;
-                  case 'Longer':
-                      query = `Make this longer: ${result.selectedText}`;
-                      break;
-                  case 'Simpler':
-                      query = `Make this simpler: ${result.selectedText}`;
-                      break;
-                  case 'More Casual':
-                      query = `Make this more casual: ${result.selectedText}`;
-                      break;
-                  case 'More Professional':
-                      query = `Make this more professional: ${result.selectedText}`;
-                      break;
-                  default:
-                      query = `Explain this text in a simple way: ${result.selectedText}`;
-              }
+              query = generateQuery(selectedRadio.value, result.selectedText);
           }
 
           sendRequest(query);
@@ -147,26 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle radio button change
   document.querySelectorAll('input[name="responseStyle"]').forEach(radio => {
       radio.addEventListener('change', function() {
-          let query = '';
-          switch (this.value) {
-              case 'Shorter':
-                  query = `Make this shorter: ${conversationHistory[conversationHistory.length - 1].content}`;
-                  break;
-              case 'Longer':
-                  query = `Make this longer: ${conversationHistory[conversationHistory.length - 1].content}`;
-                  break;
-              case 'Simpler':
-                  query = `Make this simpler: ${conversationHistory[conversationHistory.length - 1].content}`;
-                  break;
-              case 'More Casual':
-                  query = `Make this more casual: ${conversationHistory[conversationHistory.length - 1].content}`;
-                  break;
-              case 'More Professional':
-                  query = `Make this more professional: ${conversationHistory[conversationHistory.length - 1].content}`;
-                  break;
-              default:
-                  query = `Explain this text in a simple way: ${conversationHistory[conversationHistory.length - 1].content}`;
-          }
+          const lastMessage = conversationHistory[conversationHistory.length - 1].content;
+          const query = generateQuery(this.value, lastMessage);
           sendRequest(query);
       });
   });
