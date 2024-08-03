@@ -3,7 +3,7 @@
   "description": "SimplifyLaw helps you understand hard to read legal texts such as laws or even Terms and Conditions of your favourite product, etc.",
   "version": "0.1",
   "manifest_version": 3,
-  "permissions": ["activeTab", "tabs", "contextMenus", "storage"],
+  "permissions": ["activeTab", "contextMenus", "storage"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
