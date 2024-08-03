@@ -9,7 +9,6 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-
 // Function to update the icon based on the presence of selectedText in local storage
 function updateIcon() {
   chrome.storage.local.get('selectedText', function(result) {
