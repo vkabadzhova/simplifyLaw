@@ -1,7 +1,9 @@
 # SimplifyLaw Browser Extension
-![Marquee](github.com/vkabadzhova/simplifyLaw/images/Marquee_simplifylaw.png)
+
+![Marquee](https://github.com/vkabadzhova/simplifyLaw/blob/main/images/Marquee_simplifylaw.png)
 
 ✨ Welcome to SimplifyLaw! ✨
+
 > _**Feel free to contact me**_ for any questions related to the project, including those questions you think are "stupid" (such as "how do I run that?"). It is pretty tricky; I am so grateful you're even here reading this, so I'll be _more than happy to help_:)
 
 > *Disclaimer: SimplifyLaw is intended as an informational tool only, and does not constitute legal advice. Always consult with an attorney for advice regarding your specific situation.
