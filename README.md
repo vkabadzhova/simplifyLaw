@@ -26,7 +26,7 @@ SimplifyLaw is a browser extension designed to make legal jargon more accessible
 
 1. Clone the repository or download the ZIP file of the project.
    ```bash
-   git clone https://github.com/vkabadzhova/readme-law-simplifier
+   git clone https://github.com/vkabadzhova/simplifyLaw
    ```
    OR download from the green button
 1. Extract the ZIP file (if downloaded) to a preferred location on your computer.
