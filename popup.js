@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const data = {
             messages: conversationHistory.concat([{ role: "user", content: query }]),
             max_tokens: 300,
-            model: "gpt-4",
+            model: "gpt-4o-mini",
             stream: true
         };
   
