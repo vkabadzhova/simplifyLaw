@@ -1,8 +1,10 @@
+🔆 If you would like to support my work further, feel free to <a href="https://www.buymeacoffee.com/vkabadzhova" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 37px !important;width: 170px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
 # SimplifyLaw Browser Extension
 
 ![Marquee](https://github.com/vkabadzhova/simplifyLaw/blob/main/images/Marquee_simplifylaw.png)
 
-✨ Welcome to SimplifyLaw! ✨
+✨ Hey all! Welcome to SimplifyLaw! ✨
 
 > _**Feel free to contact me**_ for any questions related to the project, including those questions you think are "stupid" (such as "how do I run that?"). It is pretty tricky; I am so grateful you're even here reading this, so I'll be _more than happy to help_:)
 
@@ -53,9 +55,16 @@ More features!
 - Adjust the level of explanation (simpler, shorter, longer, more casual, more professional, etc.)
 - Ask any follow-up questions!! 
 
-## Contributing
+## I would love to hear from you!
+If you like my work or have any ideas on improving the project, let me know!
 
-Contributions are welcome! If you have ideas for new features or improvements, feel free to fork the repository and submit a pull request. Please ensure your code adheres to the project's coding standards and include any relevant documentation or tests.
+🔆 Star the repo;
+
+🔆 Make an issue, or a pull request;
+
+🔆 Reach me out! 
+
+🔆 If you would like to support my work further, feel free to <a href="https://www.buymeacoffee.com/vkabadzhova" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 37px !important;width: 170px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## License
 
